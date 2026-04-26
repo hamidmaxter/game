@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Metro Chase · endless runner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b0e1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%236c1ce6'/%3E%3Ctext x='256' y='380' font-size='380' text-anchor='middle' fill='white' font-family='monospace'%3E🏃%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen active">
+        <div class="logo">🏃‍♂️ METRO CHASE</div>
+        <button id="playBtn" class="btn-primary">▶ PLAY</button>
+        <div class="best-score">🏆 BEST: <span id="bestScoreDisplay">0</span></div>
+        <div class="sound-toggle" id="soundToggle">🔊 SOUND ON</div>
+        <div class="install-btn" id="installAppBtn">📲 INSTALL APP</div>
+        <div class="credits">← → swipe lanes | ↑ jump | ↓ slide</div>
+    </div>
+
+    <!-- In-Game HUD -->
+    <div id="gameHUD" class="hud hidden">
+        <div class="score">🏆 <span id="scoreValue">0</span></div>
+        <div class="coins">🪙 <span id="coinValue">0</span></div>
+        <button id="pauseBtn" class="pause-icon">⏸</button>
+    </div>
+
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <!-- Game Over Panel -->
+    <div id="gameOverPanel" class="overlay hidden">
+        <div class="panel">
+            <h2>🏁 GAME OVER</h2>
+            <div>SCORE: <span id="finalScore">0</span></div>
+            <div>🪙 COINS: <span id="finalCoins">0</span></div>
+            <button id="restartBtn">▶ PLAY AGAIN</button>
+            <button id="shareScoreBtn">📤 SHARE</button>
+        </div>
+    </div>
+
+    <!-- Pause Panel -->
+    <div id="pausePanel" class="overlay hidden">
+        <div class="panel">
+            <h2>⏸ PAUSED</h2>
+            <button id="resumeBtn">▶ RESUME</button>
+            <button id="quitHomeBtn">🏠 HOME</button>
+        </div>
+    </div>
+
+    <!-- Simple audio context (will be initialized on user gesture) -->
+    <script src="game.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(reg => console.log('SW registered', reg)).catch(err => console.log('SW error', err));
+            });
+        }
+        // Install PWA prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installAppBtn').style.display = 'block';
+        });
+        document.getElementById('installAppBtn').addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => deferredPrompt = null);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: #0a0c15;
+    font-family: 'Segoe UI', system-ui, 'Inter', sans-serif;
+    overflow: hidden;
+    touch-action: pan-x pan-y; /* prevent zoom while swiping */
+}
+
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.screen, .hud, .overlay {
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.hud {
+    top: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    text-shadow: 0 2px 5px black;
+    color: white;
+    pointer-events: none;
+}
+.hud button {
+    pointer-events: auto;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+.screen {
+    top: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 30%, #1e293b, #0a0c15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.8rem;
+    backdrop-filter: blur(2px);
+    z-index: 30;
+}
+.screen.hidden, .overlay.hidden, .hud.hidden {
+    display: none;
+}
+.logo {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffb347, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px #ff8c00;
+}
+.btn-primary {
+    background: #facc15;
+    border: none;
+    padding: 14px 42px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-radius: 60px;
+    color: #1e293b;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #b45309;
+    transition: 0.08s linear;
+}
+.btn-primary:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #b45309;
+}
+.best-score, .sound-toggle, .install-btn, .credits {
+    font-size: 1.2rem;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    padding: 10px 24px;
+    border-radius: 40px;
+    color: white;
+}
+.install-btn {
+    background: #10b981;
+    cursor: pointer;
+    font-weight: bold;
+}
+.overlay {
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+}
+.panel {
+    background: #151e2f;
+    padding: 2rem;
+    border-radius: 48px;
+    min-width: 280px;
+    color: white;
+    text-align: center;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ffb347;
+}
+.panel button {
+    background: #facc15;
+    border: none;
+    padding: 12px;
+    border-radius: 60px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+@media (max-width: 600px) {
+    .hud { font-size: 1.2rem; padding: 0 16px; }
+    .btn-primary { font-size: 1.4rem; padding: 10px 32px; }
+}
